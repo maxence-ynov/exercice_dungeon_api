@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: dungeon
+      POSTGRES_PASSWORD: dungeon
+      POSTGRES_DB: dungeon
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - dungeon_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dungeon -d dungeon"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  dungeon_pgdata:
